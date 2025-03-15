@@ -1,0 +1,147 @@
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local(''),
+       url('../f/noto-sans-v12-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../f/noto-sans-v12-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('../f/noto-sans-v12-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+}
+
+body {
+	padding-top: 40px;
+	padding-bottom: 20px;
+}
+
+* {
+	font-family: "Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.proto_supported4 > span, .proto_supported > span, .browser_default > span {
+	padding-bottom: 3px;
+}
+
+.proto_icmp > span, .browser_fallback > span, .dns_dns4_ip4 > span, .dns_dns4_ip6 > span, .dns_dns6_ip4 > span, .dns_dns6_ip6 > span {
+	padding-top: 5px;
+	padding-bottom: 3px;
+}
+
+.progress {
+	margin-bottom: 0;
+}
+
+.progress-bar {
+	transition: width 2s;
+}
+
+.img-flag {
+	padding-right: 6px;
+	margin-top: -3.8px;
+	height: 2em !important;
+}
+
+.address {
+    color: #FFFAA0;
+    background-color: #ffffff18;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    border-radius: 0;
+    position: relative;
+    top: 2px;
+}
+
+.label-success {
+	background-color: #6fa96f;
+}
+
+.connectivity table {
+	table-layout: fixed;
+	font-size: 1.1em;
+	margin-bottom: 0;
+}
+
+.connectivity table th {
+	width: 7em;
+}
+
+.connectivity table td {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.connectivity table .addr {
+	width: 100%;
+}
+
+.connectivity table td:last-child {
+	width: 3em;
+	text-align: right;
+}
+
+.connectivity table tr > * {
+	border-top: none !important;
+}
+
+.connectivity .glyphicon-question-sign {
+	color: #ffffff;
+	cursor: default;
+	opacity: 0.2;
+}
+
+.connectivity .glyphicon-question-sign:hover {
+	opacity: 0.75;
+}
+
+.connectivity span.refresh {
+	font-size: 1.15em;
+	cursor: pointer;
+}
+
+.connectivity td img {
+	height: 1em;
+}
+
+.noscript-warning {
+    padding: 2px 8px;
+    font-family: Monospace;
+    font-size: 90%;
+    color: #ffffff;
+    background-color: #ffffff30;
+    border-radius: 0;
+}
+
+@media (max-width: 767px) {
+	.connectivity .row > div {
+		padding: 0;
+	}
+	.connectivity .panel {
+		margin: 0;
+		border: none;
+	}
+
+	body {
+		padding-top: 25px;
+	}
+}
+
+/* Scrollbar colors */
+/* Works on Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #4e5d6c #2b3e50;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #2b3e50;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #4e5d6c;
+}

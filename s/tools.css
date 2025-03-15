@@ -1,0 +1,151 @@
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local(''),
+       url('../fonts/noto-sans-v12-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/noto-sans-v12-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/noto-sans-v12-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+}
+
+body {
+    padding-top: 40px;
+    padding-bottom: 20px;
+}
+
+* {
+    font-family: "Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.address {
+    color: #f3ff4f;
+}
+
+.tools table {
+    table-layout: fixed;
+    font-size: 1em;
+    margin-bottom: 0;
+}
+
+.tools table td {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.tools table .addr {
+    width: 100%;
+}
+
+.tools table tr > * {
+    border-top: none !important;
+}
+
+.tools span.hoverinfo {
+    font-size: 1.15em;
+    cursor: pointer;
+}
+
+@media (max-width: 767px) {
+    .tools .row > div {
+        padding: 0;
+    }
+    .tools .panel {
+        margin: 0;
+        border: none;
+    }
+
+    body {
+        padding-top: 25px;
+    }
+}
+
+.address_in {
+    padding: 2px 8px;
+    font-family: Monospace;
+    font-size: 90%;
+    color: #ffffff;
+    background-color: #ffffff30;
+    border-radius: 0;
+}
+
+.address_out {
+    padding: 2px 8px;
+    font-family: Monospace;
+    font-size: 90%;
+    color: #ffffff;
+    background-color: #ffffff30;
+    border-radius: 0;
+}
+
+.split-addr-net {
+    font-family: Monospace;
+    font-size: 90%;
+    color: #FFFAA0;
+    background-color: #ffffff00;
+    border-radius: 0;
+}
+
+.split-addr-both {
+    font-family: Monospace;
+    font-size: 90%;
+    color: #FAC898;
+    background-color: #ffffff00;
+    border-radius: 0;
+}
+
+.split-addr-addr {
+    font-family: Monospace;
+    font-size: 90%;
+    color: #ffffff87;
+    background-color: #ffffff00;
+    border-radius: 0;
+}
+
+.split-ptr-net {
+    font-family: Monospace;
+    color: #FFFAA0;
+}
+
+.split-ptr-addr {
+    font-family: Monospace;
+    color: #FFCCA0;
+}
+
+.ptr {
+    font-size: 76%;
+}
+
+#subnet_out {
+    white-space: pre-wrap;
+
+ }
+
+.tools .glyphicon-question-sign {
+    color: #ffffff;
+    cursor: default;
+    opacity: 0.25;
+}
+
+.tools .glyphicon-question-sign:hover {
+    opacity: 0.75;
+}
+
+/* Scrollbar colors */
+/* Works on Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #4e5d6c #2b3e50;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #2b3e50;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #4e5d6c;
+}

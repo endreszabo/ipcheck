@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html class="no-js">
+	<head>
+		<meta charset="utf-8" />
+		<title>{{.title}}</title>
+		<meta name="viewport" content="width=device-width" />
+		<link rel="stylesheet" href="/p/s/bootstrap-dark.min.css" />
+		<link rel="stylesheet" href="/p/s/tools.css?v=4" />
+	</head>
+	<body>
+		<div class="navbar navbar-default navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="/">{{.fqdn}}</a>
+				</div>
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li class="internal">
+							<a href="/" title="Connectivity">Connectivity</a>
+						</li>
+						<li class="internal">
+							<a href="/request" title="Connectivity">HTTP Headers</a>
+						</li>
+						<li class="active internal">
+							<a href="/tools" title="Tools">Tools</a>
+						</li>
+					</ul>
+                    {{if .hosted_by_url }}
+					<ul class="nav navbar-nav navbar-right">
+						<li class="internal">
+							<a href="{{.hosted_by_url}}" target="_blank" title="Hosted by ~zotan">{{ if .hosted_by_string }}{.hosted_by_string}}{{else}}{{.hosted_by_url}}{{end}}</a>
+						</li>
+					</ul>
+                    {{end}}
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<br />
+			<noscript>
+				<style>
+					.jsonly { display: none }
+				</style>
+				<div class="address_out" id="random_subnet_noscript">JavaScript is disabled. Please enable it to use this page.</div>
+			</noscript>
+			<div class="tools jsonly">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">Expand an Address</h3>
+							</div>
+							<div class="panel-body">
+								<table class="table">
+									<tr>
+										<td>
+											<input class="form-control address_in" id="address_to_expand" type="text" value="2001:db8::">
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="address_out" id="expanded_address">2001:0db8:0000:0000:0000:0000:0000:0000</div>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">Compress an Address</h3>
+							</div>
+							<div class="panel-body">
+								<table class="table">
+									<tr>
+										<td>
+											<input class="form-control address_in" id="address_to_compress" type="text" value="2001:0db8:0000:0000:0000:0000:0000:0000">
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="address_out" id="compressed_address">2001:db8::</div>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<span class="glyphicon glyphicon-question-sign pull-right hoverinfo" data-toggle="popover" data-trigger="hover" data-content="Example usage: To generate a random /48 prefix out of fc00::/7, use fc00::/7/48 as input"></span>
+								<h3 class="panel-title">Random ULA Prefix</h3>
+							</div>
+							<div class="panel-body">
+								<table class="table">
+									<tr>
+										<td>
+											<input class="form-control address_in" id="random_subnet_src" type="text" value="fc00::/7/48" placeholder="fc00::/7/48" onChange="randomChanged">
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="address_out" id="random_subnet">fc00:0000:0000:0000::/48</div>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">ip6.arpa PTR generator</h3>
+							</div>
+							<div class="panel-body">
+								<table class="table">
+									<tr>
+										<td>
+											<input class="form-control address_in" id="ptr_to_generate" type="text" value="{{.remoteIP}}">
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="address_out ptr" id="generated_ptr">
+												<span class="split-ptr-addr">0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0</span>.<span class="split-ptr-net">0.0.0.0.0.0.0.0.8.b.d.0.1.0.0.2</span>.ip6.arpa
+											</div>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">MAC to EUI-64</h3>
+							</div>
+							<div class="panel-body">
+								<table class="table">
+									<tr>
+										<td>
+											<input class="form-control address_in" id="mac_to_eui64_in" type="text" value="b5:9d:41:e9:8d:9d">
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="address_out" id="mac_to_eui64_out">fe80::b79d:41ff:fee9:8d9d</div>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">EUI-64 to MAC</h3>
+							</div>
+							<div class="panel-body">
+								<table class="table">
+									<tr>
+										<td>
+											<input class="form-control address_in" id="eui64_to_mac_in" type="text" value="fe80::b79d:41ff:fee9:8d9d">
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="address_out" id="eui64_to_mac_out">b5:9d:41:e9:8d:9d</div>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">Subnet Calculator</h3>
+								<!-- Address Range, Divide Subnet -->
+							</div>
+							<div class="panel-body">
+								<table class="table">
+									<tr>
+										<td>
+											<input class="form-control address_in" id="subnet_in" type="text" value="{{.remoteIP}}/64">
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="address_out" id="subnet_out">Network Range:<br/><span class="split-addr-net">2001:0db8</span><span class="split-addr-addr">:0000:0000:0000:0000:0000:0000</span><br/><span class="split-addr-net">2001:0db8</span><span class="split-addr-addr">:ffff:ffff:ffff:ffff:ffff:ffff</span><br/><br/>65536 /48 subnets</div>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="/p/j/jquery.min.js"></script>
+		<script src="/p/j/bootstrap.min.js"></script>
+		<script src="/p/j/tools.js?v=4"></script>
+	</body>
+</html>

@@ -1,0 +1,262 @@
+<html>
+<head>
+<title>{{.title}}</title>
+</head>
+<body>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html class="no-js">
+	<head>
+		<meta charset="utf-8" />
+		<title>{{.title}}</title>
+		<meta name="viewport" content="width=device-width" />
+		<link rel="stylesheet" href="/p/s/bootstrap-dark.min.css" />
+		<link rel="stylesheet" href="/p/s/connectivity.css?v=4" />
+        <link rel="shortcut icon" href="/p/i/favicon.ico" />
+	</head>
+	<body>
+		<div class="navbar navbar-default navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="/">{{.fqdn}}</a>
+				</div>
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li class="active internal">
+							<a href="/" title="Connectivity">Connectivity</a>
+						</li>
+						<li class="internal">
+							<a href="/request" title="Connectivity">HTTP Headers</a>
+						</li>
+						<li class="internal">
+							<a href="/tools" title="Tools">Tools</a>
+						</li>
+					</ul>
+                    {{if .hosted_by_url }}
+					<ul class="nav navbar-nav navbar-right">
+						<li class="internal">
+							<a href="{{.hosted_by_url}}" target="_blank" title="Hosted by ~zotan">{{ if .hosted_by_string }}{.hosted_by_string}}{{else}}{{.hosted_by_url}}{{end}}</a>
+						</li>
+					</ul>
+                    {{end}}
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<br />
+			<noscript>
+				<div class="row">
+                    <style>
+                        .jsonly { display: none }
+                    </style>
+					<div class="col-lg-6 col-md-7">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Address information</h3>
+                            </div>
+                            <div class="panel-body">
+                                <table id="v6_conn" class="table">
+                                    <tr>
+                                        <th>Your IPv{{.family}} Address</th>
+                                        <td class="proto_address"><span class="address">{{.ip}}</span></td>
+                                        <td>
+                                            <span class="glyphicon glyphicon-question-sign" data-toggle="popover" data-trigger="hover" data-content="This is the address you are identified by on IPv{{.family}}-only websites"></span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-7 noscript-warning">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Warning</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="noscript-warning">JavaScript is disabled. Visit these pages to get info without javascript:</div>
+                                <br/>
+                                <a class="btn btn-primary" href="https://ip.{{.fqdn}}">Auto</a>
+                                <a class="btn btn-primary" href="https://ip4.{{.fqdn}}">IPv4</a>
+                                <a class="btn btn-primary" href="https://ip6.{{.fqdn}}">IPv6</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+			</noscript>
+			<div class="connectivity jsonly">
+				<div class="row">
+					<div class="col-lg-6 col-md-7">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<span id="refresh_ipv4" class="glyphicon glyphicon-refresh pull-right refresh"></span>
+								<h3 class="panel-title">IPv4 connectivity</h3>
+							</div>
+							<div class="panel-body">
+								<table id="v4_conn" class="table">
+									<tr>
+										<th>IPv4</th>
+										<td class="proto_supported" id="ipv4_supported">{{if eq .family 4}}<span class="label label-success" style="font-size:1em">Supported</span>{{end}}</td>
+										<td><span class="glyphicon glyphicon-question-sign" data-toggle="popover" data-trigger="hover" data-content="This test determines if you have IPv4 connectivity"></span></td>
+									</tr>
+									<tr>
+										<th>Address</th>
+										<td class="proto_address" id="ipv4_address">{{if eq .family 4}}<span class="address">{{.ip}}</span>{{end}}</td>
+										<td>
+											<span class="glyphicon glyphicon-question-sign" data-toggle="popover" data-trigger="hover" data-content="This is the address you are identified by on IPv4-only websites"></span>
+										</td>
+									</tr>
+									<tr>
+										<th>Hostname</th>
+										<td class="proto_hostname" id="ipv4_hostname"></td>
+										<td>
+											<span class="glyphicon glyphicon-question-sign" data-toggle="popover" data-trigger="hover" data-content="This is the hostname you are identified by on IPv4-only websites"></span>
+										</td>
+									</tr>
+									<tr>
+										<th>ISP</th>
+										<td class="proto_isp" id="ipv4_isp"></td>
+										<td><span class="glyphicon glyphicon-question-sign" data-toggle="popover" data-trigger="hover" data-content="This is the network provider that your IPv4 address belongs to"></span></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<span id="refresh_ipv6" class="glyphicon glyphicon-refresh pull-right refresh"></span>
+								<h3 class="panel-title">IPv6 connectivity</h3>
+							</div>
+							<div class="panel-body">
+								<table id="v6_conn" class="table">
+									<tr>
+										<th>IPv6</th>
+										<td class="proto_supported" id="ipv6_supported">{{if eq .family 6}}<span class="label label-success" style="font-size:1em">Supported</span>{{end}}</td>
+										<td><span class="glyphicon glyphicon-question-sign" data-toggle="popover" data-trigger="hover" data-content="This test determines if you have IPv6 connectivity"></span></td>
+									</tr>
+									<tr>
+										<th>ICMP</th>
+										<td class="proto_icmp" id="ipv6_icmp"></td>
+										<td>
+											<span
+												class="glyphicon glyphicon-question-sign"
+												data-toggle="popover"
+												data-trigger="hover"
+												data-content="This test determines if a device between you and this website is blocking IPv6-ICMP, a protocol mandatory for IPv6 to work properly"
+												></span>
+										</td>
+									</tr>
+									<tr>
+										<th>Address</th>
+										<td class="proto_address" id="ipv6_address">{{if eq .family 6}}<span class="address">{{.ip}}</span>{{end}}</td>
+										<td>
+											<span class="glyphicon glyphicon-question-sign" data-toggle="popover" data-trigger="hover" data-content="This is the address you are identified by on IPv6-enabled websites"></span>
+										</td>
+									</tr>
+									<tr>
+										<th>Hostname</th>
+										<td class="proto_hostname" id="ipv6_hostname"></td>
+										<td>
+											<span class="glyphicon glyphicon-question-sign" data-toggle="popover" data-trigger="hover" data-content="This is the hostname you are identified by on IPv6-enabled websites"></span>
+										</td>
+									</tr>
+									<tr>
+										<th>ISP</th>
+										<td class="proto_isp" id="ipv6_isp"></td>
+										<td><span class="glyphicon glyphicon-question-sign" data-toggle="popover" data-trigger="hover" data-content="This is the network provider that your IPv6 address belongs to"></span></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-5">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<span id="refresh_browser" class="glyphicon glyphicon-refresh pull-right refresh"></span>
+								<h3 class="panel-title">Browser</h3>
+							</div>
+							<div class="panel-body">
+								<table id="browser" class="table">
+									<tr>
+										<th>Default</th>
+										<td class="browser_default"><span class="label label-success" style="font-size:1em">IPv{{.family}}</span></td>
+										<td>
+											<span
+												class="glyphicon glyphicon-question-sign"
+												data-toggle="popover"
+												data-trigger="hover"
+												data-content="This is the default protocol used by your browser for websites supporting IPv6 and IPv4"
+												></span>
+										</td>
+									</tr>
+									<tr>
+										<th>With XHR</th>
+										<td class="browser_default" id="browser_default"></td>
+										<td>
+											<span
+												class="glyphicon glyphicon-question-sign"
+												data-toggle="popover"
+												data-trigger="hover"
+												data-content="This is the default protocol used by your browser for websites supporting IPv6 and IPv4"
+												></span>
+										</td>
+									</tr>
+									<tr>
+										<th>Fallback</th>
+										<td class="browser_fallback" id="browser_fallback"></td>
+										<td>
+											<span
+												class="glyphicon glyphicon-question-sign"
+												data-toggle="popover"
+												data-trigger="hover"
+												data-content="This tests if your browser properly falls back to the respective other protocol if the default protocol is not working"
+												></span>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<span id="refresh_dns" class="glyphicon glyphicon-refresh pull-right refresh"></span>
+								<h3 class="panel-title">DNS</h3>
+							</div>
+							<div class="panel-body">
+								<table id="dns" class="table">
+									<tr>
+										<th>NSv4 + IPv4</th>
+										<td class="dns_dns4_ip4" id="dns_dns4_ip4"></td>
+										<td><span class="glyphicon glyphicon-question-sign" data-toggle="popover" data-trigger="hover" data-content="This tests if you can access websites served by IPv4-only nameservers via IPv4"></span></td>
+									</tr>
+									<tr>
+										<th>NSv4 + IPv6</th>
+										<td class="dns_dns4_ip6" id="dns_dns4_ip6"></td>
+										<td><span class="glyphicon glyphicon-question-sign" data-toggle="popover" data-trigger="hover" data-content="This tests if you can access websites served by IPv4-only nameservers via IPv6"></span></td>
+									</tr>
+									<tr>
+										<th>NSv6 + IPv4</th>
+										<td class="dns_dns6_ip4" id="dns_dns6_ip4"></td>
+										<td><span class="glyphicon glyphicon-question-sign" data-toggle="popover" data-trigger="hover" data-content="This tests if you can access websites served by IPv6-only nameservers via IPv4"></span></td>
+									</tr>
+									<tr>
+										<th>NSv6 + IPv6</th>
+										<td class="dns_dns6_ip6" id="dns_dns6_ip6"></td>
+										<td><span class="glyphicon glyphicon-question-sign" data-toggle="popover" data-trigger="hover" data-content="This tests if you can access websites served by IPv6-only nameservers via IPv6"></span></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="/p/j/jquery.min.js"></script>
+		<script src="/p/j/bootstrap.min.js"></script>
+		<script src="/p/j/connectivity.js?v=6"></script>
+	</body>
+</html>
