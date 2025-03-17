@@ -2,7 +2,7 @@
 <html class="no-js">
 	<head>
 		<meta charset="utf-8" />
-		<title>{{.title}}</title>
+		<title>{{.label}}</title>
 		<meta name="viewport" content="width=device-width" />
 		<link rel="stylesheet" href="/p/s/bootstrap-dark.min.css" />
 		<link rel="stylesheet" href="/p/s/connectivity.css?v=4" />
@@ -17,7 +17,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="/">{{.fqdn}}</a>
+					<a class="navbar-brand" href="/">{{.label}}</a>
 				</div>
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
@@ -72,11 +72,11 @@
 								<h3 class="panel-title">Warning</h3>
 							</div>
 							<div class="panel-body">
-								<div class="noscript-warning">JavaScript is disabled. Visit these pages to get info without javascript:</div>
+								<div class="noscript-warning">JavaScript is disabled. Site functionality is very limited. Visit these links to get your IP addresses per respective IP-family:</div>
 								<br/>
-								<a class="btn btn-primary" href="https://ip.{{.fqdn}}">Auto</a>
-								<a class="btn btn-primary" href="https://ip4.{{.fqdn}}">IPv4</a>
-								<a class="btn btn-primary" href="https://ip6.{{.fqdn}}">IPv6</a>
+								<a class="btn btn-primary" href="https://{{.tld}}">Auto</a>
+								<a class="btn btn-primary" href="https://v4.{{.tld}}">IPv4</a>
+								<a class="btn btn-primary" href="https://v6.{{.tld}}">IPv6</a>
 							</div>
 						</div>
 					</div>

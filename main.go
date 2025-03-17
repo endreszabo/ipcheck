@@ -11,6 +11,8 @@ import (
 	"strings"
 	"time"
 
+	"golang.org/x/net/publicsuffix"
+
 	"github.com/caarlos0/env/v11"
 	"github.com/gin-gonic/gin"
 	"github.com/pires/go-proxyproto"
@@ -18,7 +20,7 @@ import (
 
 //go:embed s/* t/* j/* f/* i/*
 var f embed.FS
-var label string
+var tld string
 
 type config struct {
 	ListenAddr     string `env:"LISTEN_ADDR" envDefault:"[::]:27654"`
@@ -37,14 +39,25 @@ func family_of_address(ipaddress string) int {
 	return ipfamily
 }
 
-func get_label(cfg *config, c *gin.Context) string {
-	var apparent_host string
-	if label == "" {
-		apparent_host = strings.SplitN(c.Request.Host, ":", 1)[0]
+// returns: label, tld
+func get_label(cfg *config, c *gin.Context) (string, string) {
+	var tld string
+
+	host := strings.SplitN(c.Request.Host, ":", 1)[0]
+	etld, err := publicsuffix.EffectiveTLDPlusOne(host)
+	fmt.Println(host, etld, err)
+
+	if err == nil && etld != "" {
+		tld = etld
 	} else {
-		apparent_host = label
+		fmt.Printf("error during converting TLD:\nhost: %q\ntld: %q\nerr: %q\n", host, etld, err)
 	}
-	return apparent_host
+
+	if cfg.Label == "" {
+		return tld, tld
+	} else {
+		return cfg.Label, tld
+	}
 }
 
 func main() {
@@ -102,11 +115,11 @@ func main() {
 			return
 		}
 
-		apparent_host := get_label(&cfg, c)
+		label, tld := get_label(&cfg, c)
 
 		c.HTML(http.StatusOK, "index.tmpl", gin.H{
-			"title":  apparent_host,
-			"fqdn":   apparent_host,
+			"label":  label,
+			"tld":    tld,
 			"family": ipfamily,
 			"ip":     c.RemoteIP(),
 		})
@@ -123,17 +136,17 @@ func main() {
 			return
 		}
 
-		apparent_host := get_label(&cfg, c)
+		label, tld := get_label(&cfg, c)
 
 		c.HTML(http.StatusOK, "request.tmpl", gin.H{
-			"title":   apparent_host,
-			"fqdn":    apparent_host,
+			"label":   label,
+			"tld":     tld,
 			"request": string(requestDump),
 		})
 	})
 
 	router.GET("/tools", func(c *gin.Context) {
-		apparent_host := get_label(&cfg, c)
+		label, tld := get_label(&cfg, c)
 
 		remoteIP := c.RemoteIP()
 		ipfamily := family_of_address(remoteIP)
@@ -143,8 +156,8 @@ func main() {
 		}
 		c.HTML(http.StatusOK, "tools.tmpl", gin.H{
 			"remoteIP": remoteIP,
-			"title":    apparent_host,
-			"fqdn":     apparent_host,
+			"label":    label,
+			"tld":      tld,
 		})
 	})
 
