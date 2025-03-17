@@ -1,11 +1,3 @@
-<html>
-<head>
-<title>{{.title}}</title>
-</head>
-<body>
-</body>
-</html>
-
 <!DOCTYPE html>
 <html class="no-js">
 	<head>
@@ -14,7 +6,7 @@
 		<meta name="viewport" content="width=device-width" />
 		<link rel="stylesheet" href="/p/s/bootstrap-dark.min.css" />
 		<link rel="stylesheet" href="/p/s/connectivity.css?v=4" />
-        <link rel="shortcut icon" href="/p/i/favicon.ico" />
+		<link rel="shortcut icon" href="/p/i/favicon.ico" />
 	</head>
 	<body>
 		<div class="navbar navbar-default navbar-fixed-top">
@@ -39,13 +31,13 @@
 							<a href="/tools" title="Tools">Tools</a>
 						</li>
 					</ul>
-                    {{if .hosted_by_url }}
+					{{if .hosted_by_url }}
 					<ul class="nav navbar-nav navbar-right">
 						<li class="internal">
 							<a href="{{.hosted_by_url}}" target="_blank" title="Hosted by ~zotan">{{ if .hosted_by_string }}{.hosted_by_string}}{{else}}{{.hosted_by_url}}{{end}}</a>
 						</li>
 					</ul>
-                    {{end}}
+					{{end}}
 				</div>
 			</div>
 		</div>
@@ -53,42 +45,42 @@
 			<br />
 			<noscript>
 				<div class="row">
-                    <style>
-                        .jsonly { display: none }
-                    </style>
+					<style>
+						.jsonly { display: none }
+					</style>
 					<div class="col-lg-6 col-md-7">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Address information</h3>
-                            </div>
-                            <div class="panel-body">
-                                <table id="v6_conn" class="table">
-                                    <tr>
-                                        <th>Your IPv{{.family}} Address</th>
-                                        <td class="proto_address"><span class="address">{{.ip}}</span></td>
-                                        <td>
-                                            <span class="glyphicon glyphicon-question-sign" data-toggle="popover" data-trigger="hover" data-content="This is the address you are identified by on IPv{{.family}}-only websites"></span>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-7 noscript-warning">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Warning</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="noscript-warning">JavaScript is disabled. Visit these pages to get info without javascript:</div>
-                                <br/>
-                                <a class="btn btn-primary" href="https://ip.{{.fqdn}}">Auto</a>
-                                <a class="btn btn-primary" href="https://ip4.{{.fqdn}}">IPv4</a>
-                                <a class="btn btn-primary" href="https://ip6.{{.fqdn}}">IPv6</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">Address information</h3>
+							</div>
+							<div class="panel-body">
+								<table id="v6_conn" class="table">
+									<tr>
+										<th>Your IPv{{.family}} Address</th>
+										<td class="proto_address"><span class="address">{{.ip}}</span></td>
+										<td>
+											<span class="glyphicon glyphicon-question-sign" data-toggle="popover" data-trigger="hover" data-content="This is the address you are identified by on IPv{{.family}}-only websites"></span>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-7 noscript-warning">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">Warning</h3>
+							</div>
+							<div class="panel-body">
+								<div class="noscript-warning">JavaScript is disabled. Visit these pages to get info without javascript:</div>
+								<br/>
+								<a class="btn btn-primary" href="https://ip.{{.fqdn}}">Auto</a>
+								<a class="btn btn-primary" href="https://ip4.{{.fqdn}}">IPv4</a>
+								<a class="btn btn-primary" href="https://ip6.{{.fqdn}}">IPv6</a>
+							</div>
+						</div>
+					</div>
+				</div>
 			</noscript>
 			<div class="connectivity jsonly">
 				<div class="row">
