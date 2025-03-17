@@ -16,8 +16,17 @@ function encodeAttr(text) {
 
 
 function spanCustomClass(className, text) {
-    return `<span class="label label-${className}" style="font-size: 1em">${text}</abbr></span>`;
+    return `<span class="label label-${className}" style="font-size: 1em">${text}</span>`;
 }
+
+function jsonToField(className, text, hint) {
+    if (hint) {
+        return `<span class="label label-${className}" style="font-size: 1em"><abbr title="${encodeAttr(title)}">${text}</abbr></span>`;
+    } else {
+        return `<span class="label label-${className}" style="font-size: 1em">${text}</span>`;
+    }
+}
+
 
 function spanError(text, title) {
     return `<span class="label label-danger" style="font-size: 1em"><abbr title="${encodeAttr(title)}">${text}</abbr></span>`;
@@ -184,8 +193,8 @@ function dnsTest(zoneFamily, ipFamily, timeout) {
 }
 
 function pingTest(timeout) {
-    const field_dns = document.getElementById(`ipv6_icmp`);
-    const progressbar = makeProgressBar(field_dns)
+    const field_ipv6_icmp = document.getElementById(`ipv6_icmp`);
+    const progressbar = makeProgressBar(field_ipv6_icmp)
 
     const abortController = new AbortController();
     const abortSignal = abortController.signal;
@@ -199,19 +208,15 @@ function pingTest(timeout) {
     }).then((resp) => {
         clearTimeout(timeoutTimer)
         resp.json().then((json) => {
-            if (json.err == null) {
-                field_dns.innerHTML = spanCustomClass("success", json.stats);
-            } else {
-                field_dns.innerHTML = spanError("Test failed", json.err);
-            }
+            field_ipv6_icmp.innerHTML = jsonToField(json.status, json.msg, json.hint);
             return json
         }).catch((err) => {
-            field_dns.innerHTML = spanError("Lookup failed", err)
+            field_ipv6_icmp.innerHTML = spanError("Error parsing JSON: "+err, err)
         })
         return resp
     }).catch((err) => {
         clearTimeout(timeoutTimer)
-        field_dns.innerHTML = spanError("Lookup failed", err)
+        field_ipv6_icmp.innerHTML = spanError("Lookup failed", err)
     })
 }
 

@@ -215,22 +215,23 @@ func main() {
 	})
 
 	router.GET("/ping.json", func(c *gin.Context) {
-		remoteIP := c.RemoteIP()
-		if family_of_address(remoteIP) != 6 {
-			c.JSON(http.StatusBadRequest, gin.H{"err": "remote IP address is not an IPv6 address"})
-		}
 
-		stats, err := PingHost(c, remoteIP)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"err": err})
-			return
-		}
+		/*
+			stats, err := PingHost(c, remoteIP)
+			if err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{"err": err})
+				return
+			}
+			c.Writer.Header().Add("access-control-allow-origin", "*")
+
+			c.JSON(http.StatusOK, gin.H{
+				"stats": stats,
+				"err":   nil,
+			})
+		*/
 		c.Writer.Header().Add("access-control-allow-origin", "*")
-
-		c.JSON(http.StatusOK, gin.H{
-			"stats": stats,
-			"err":   nil,
-		})
+		PingHost(c)
+		return
 	})
 
 	router.GET("/myip.json", func(c *gin.Context) {
