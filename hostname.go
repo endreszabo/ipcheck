@@ -3,8 +3,10 @@ package main
 import (
 	"context"
 	"net"
+	"net/http"
 	"time"
 
+	"github.com/gin-gonic/gin"
 	"github.com/hashicorp/golang-lru/v2/expirable"
 )
 
@@ -13,20 +15,56 @@ type hostnameLookup struct {
 	resolver *net.Resolver
 }
 
-func (l *hostnameLookup) LookupPTR(ctx context.Context, remoteIP string) (string, error) {
+func (l *hostnameLookup) LookupPTR(c *gin.Context) {
+	remoteIP := c.RemoteIP()
 	rv, ok := l.cache.Get(remoteIP)
 	if ok {
-		return rv, nil
+		c.JSON(http.StatusOK, gin.H{
+			"status":       "success",
+			"msg":          rv,
+			"hint":         "",
+			"x-from-cache": true,
+		})
+		return
 	}
 
-	rsp, err := l.resolver.LookupAddr(ctx, remoteIP)
+	rsp, err := l.resolver.LookupAddr(c, remoteIP)
+	if perr, ok := err.(*net.DNSError); ok {
+		if perr.IsNotFound {
+			c.JSON(http.StatusOK, gin.H{
+				"status": "warning",
+				"msg":    "Host not found",
+				"hint":   "Record was not found in zone: " + perr.Err,
+			})
+			return
+		}
+		if perr.IsTimeout {
+			c.JSON(http.StatusOK, gin.H{
+				"status": "warning",
+				"msg":    "Timed out",
+				"hint":   "DNS lookup timed out: " + perr.Err,
+			})
+			return
+		}
+	}
+
 	if err != nil {
-		return "", err
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status":       "warning",
+			"msg":          "Lookup failed",
+			"hint":         err, //fixme
+			"x-from-cache": false,
+		})
+		return
 	}
 	rv = rsp[0]
 	l.cache.Add(remoteIP, rv)
 
-	return rv, nil
+	c.JSON(http.StatusOK, gin.H{
+		"status": "success",
+		"msg":    rv,
+		"hint":   "",
+	})
 }
 
 func NewHostnameLookup(cacheSize int, cacheTTL time.Duration, resolverIP string) *hostnameLookup {

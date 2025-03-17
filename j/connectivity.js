@@ -19,11 +19,11 @@ function spanCustomClass(className, text) {
     return `<span class="label label-${className}" style="font-size: 1em">${text}</span>`;
 }
 
-function jsonToField(className, text, hint) {
+function jsonToField(status, msg, hint) {
     if (hint) {
-        return `<span class="label label-${className}" style="font-size: 1em"><abbr title="${encodeAttr(title)}">${text}</abbr></span>`;
+        return `<span class="label label-${status}" style="font-size: 1em"><abbr title="${encodeAttr(hint)}">${msg}</abbr></span>`;
     } else {
-        return `<span class="label label-${className}" style="font-size: 1em">${text}</span>`;
+        return `<span class="label label-${status}" style="font-size: 1em">${msg}</span>`;
     }
 }
 
@@ -112,14 +112,10 @@ function hostnameLookup(family, timeout) {
     }).then((resp) => {
         clearTimeout(timeoutTimer)
         resp.json().then((json) => {
-            if (json.hostname == "") {
-                field_hostname.innerHTML = spanError("Lookup failed", JSON.stringify(json.err));
-            } else {
-                field_hostname.innerHTML = json.hostname;
-            }
+            field_hostname.innerHTML = jsonToField(json.status, json.msg, json.hint)
             return json
         }).catch((err) => {
-            field_hostname.innerHTML = spanError("Lookup failed", err)
+            field_hostname.innerHTML = spanError("Error parsing JSON: "+err, err)
         })
         return resp
     }).catch((err) => {
@@ -183,7 +179,7 @@ function dnsTest(zoneFamily, ipFamily, timeout) {
             }
             return json
         }).catch((err) => {
-            field_dns.innerHTML = spanError("Lookup failed", err)
+            field_dns.innerHTML = spanError("Error parsing JSON: "+err, err)
         })
         return resp
     }).catch((err) => {

@@ -182,11 +182,7 @@ func main() {
 
 	router.GET("/myhostname.json", func(c *gin.Context) {
 		c.Writer.Header().Add("access-control-allow-origin", "*")
-		ip, err := resolver.LookupPTR(c, c.RemoteIP())
-		c.JSON(http.StatusOK, gin.H{
-			"hostname": ip,
-			"err":      err,
-		})
+		resolver.LookupPTR(c)
 	})
 
 	router.GET("/geoip.json", func(c *gin.Context) {
@@ -231,7 +227,6 @@ func main() {
 		*/
 		c.Writer.Header().Add("access-control-allow-origin", "*")
 		PingHost(c)
-		return
 	})
 
 	router.GET("/myip.json", func(c *gin.Context) {
